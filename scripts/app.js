@@ -2,10 +2,11 @@
 * @Author: web1804gz
 * @Date:   2018-07-10 15:59:14
 * @Last Modified by:   web1804gz
-* @Last Modified time: 2018-07-10 17:05:52
+* @Last Modified time: 2018-07-11 11:36:41
 */
 //创建app应用模块
-var yike = angular.module("yike",[]);
+//依赖控制器模块，在依赖中写上控制器模块名称
+var yike = angular.module("yike",["Controller","ngRoute"]);
 
 /*
   run方法在模块创建完成之后，会直接执行
@@ -43,3 +44,21 @@ yike.run(["$rootScope",function($rootScope){
     	};
     };
 }]);
+yike.config(["$locationProvider",function($locationProvider){
+    $locationProvider.hashPrefix("");
+}]);
+//配置路由
+yike.config(["$routeProvider",function($routeProvider){
+    $routeProvider.when("/",{
+        redirectTo:"/index"
+    }).when("/index",{
+        templateUrl:"./views/list.html",
+        controller:"indexCtrl"
+    }).when("/older",{
+        templateUrl:"./views/older.html",
+        controller:"olderCtrl"
+    }).when("/author",{
+        templateUrl:"./views/author.html",
+        controller:"authorCtrl"
+    })
+}])
